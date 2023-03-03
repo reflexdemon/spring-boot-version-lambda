@@ -5,6 +5,7 @@ io:
                 endpoint:
                     snapshotlist: https://repo.spring.io/ui/api/v1/ui/nativeBrowser/snapshot/org/springframework/boot/spring-boot-starter/
                     milestonelist: https://repo.spring.io/ui/api/v1/ui/nativeBrowser/milestone/org/springframework/boot/spring-boot-starter/
+                    versionlist: https://repo.spring.io/ui/api/v1/ui/nativeBrowser/release/org/springframework/boot/spring-boot-starter/
             endpoint:
                 docVersions: https://docs.spring.io/spring-boot/docs/
                 milestonelist: https://repo.spring.io/milestone/org/springframework/boot/spring-boot-starter/
@@ -27,3 +28,11 @@ spring:
     mvc:
         pathmatch:
             matching-strategy: ant_path_matcher
+
+
+springdoc:
+    springdoc:
+        api-docs:
+            path: /api-docs # /api-docs endpoint custom path
+    swagger-ui:
+        path: /swagger-ui.html # swagger-ui custom path

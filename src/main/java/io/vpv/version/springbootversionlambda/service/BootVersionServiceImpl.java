@@ -28,9 +28,14 @@ public class BootVersionServiceImpl implements BootVersionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void setDocumentParserUtility(DocumentParserUtility documentParserUtility) {
-        this.documentParserUtility = documentParserUtility;
+    @Override
+    public DocumentParserUtility getDocumentParserUtility() {
+        return documentParserUtility;
     }
+
+    /**
+     * @return
+     */
 
     @Autowired
     DocumentParserUtility documentParserUtility;
@@ -48,6 +53,10 @@ public class BootVersionServiceImpl implements BootVersionService {
     private String dependencyPage;
     @Value("${io.vpv.version.endpoint.dependency.dependencyPageNew}")
     private String dependencyPageNew;
+    @Override
+    public String getDocVersions() {
+        return docVersions;
+    }
 
     @Override
     @Cacheable("versionlist")
@@ -84,39 +93,6 @@ public class BootVersionServiceImpl implements BootVersionService {
         return getVersionsFromURL(snapshotlist);
     }
 
-
-    @Override
-    @Cacheable("versioninfo")
-    public VersionInfo getAllVersionInfo() {
-        logger.debug("Listing All Boot Versions");
-        return new VersionInfo(getMileStoneVersionList(), getSnapshotVersionList());
-    }
-
-    @Override
-    @Cacheable("docVersions")
-    public List<String> getDocumentedVersionList() {
-
-        logger.debug("Listing Documented Spring Boot Versions");
-        List<String> versions = getVersionsFromURL(docVersions);
-        //Get latest on Top
-        versions.sort(reverseOrder(String::compareToIgnoreCase));
-        return versions;
-    }
-    private List<String> getVersionsFromURL(String url) {
-        List<String> versions;
-        Document document = documentParserUtility.getDocumentFromURL(url);
-
-        versions = document.select("a").
-                stream().
-                filter(Objects::nonNull).
-                map(Element::text).
-                filter(text -> !text.contains("..")).
-                filter(text -> !text.contains("maven")).
-                filter(text -> (text.indexOf('.') > 0)).
-                map(value -> value.substring(0, value.length() - 1)).
-                collect(toList());
-        return versions;
-    }
     @Override
     @Cacheable(value = "dependency", key = "#bootVersion")
     public DependencyDetails getDependencies(final String bootVersion) {
@@ -125,7 +101,7 @@ public class BootVersionServiceImpl implements BootVersionService {
         try {
             logger.debug("Searching dependencies for {}", bootVersion);
             String url = basePath + bootVersion;
-            Document document = documentParserUtility.getDocumentFromURL(url, dependencyPage, dependencyPageNew);
+            Document document = getDocumentParserUtility().getDocumentFromURL(url, dependencyPage, dependencyPageNew);
 
             Elements allTables =
                     document.select("body > div.appendix > div.informaltable > table");
@@ -148,4 +124,27 @@ public class BootVersionServiceImpl implements BootVersionService {
         return dependencyDetails;
     }
 
+    /**
+     * @return
+     */
+    @Override
+    public String getDependencyPageNew() {
+        return dependencyPageNew;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getDependencyPage() {
+        return dependencyPage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBasePath() {
+        return basePath;
+    }
 }
