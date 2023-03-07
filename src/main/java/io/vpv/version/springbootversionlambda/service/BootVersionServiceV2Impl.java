@@ -1,9 +1,7 @@
 package io.vpv.version.springbootversionlambda.service;
 
 import io.vpv.version.springbootversionlambda.modal.Child;
-import io.vpv.version.springbootversionlambda.modal.DependencyDetails;
 import io.vpv.version.springbootversionlambda.modal.RepoArtifact;
-import io.vpv.version.springbootversionlambda.modal.VersionInfo;
 import io.vpv.version.springbootversionlambda.util.DocumentParserUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Collections.reverseOrder;
 
 @Service
 @Primary

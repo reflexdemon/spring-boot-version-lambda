@@ -2,7 +2,6 @@ package io.vpv.version.springbootversionlambda.service;
 
 import io.vpv.version.springbootversionlambda.modal.Dependency;
 import io.vpv.version.springbootversionlambda.modal.DependencyDetails;
-import io.vpv.version.springbootversionlambda.modal.VersionInfo;
 import io.vpv.version.springbootversionlambda.util.DocumentParserUtility;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Collections.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 /**

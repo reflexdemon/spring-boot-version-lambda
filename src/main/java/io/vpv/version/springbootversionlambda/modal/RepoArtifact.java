@@ -1,8 +1,8 @@
 
 package io.vpv.version.springbootversionlambda.modal;
 
-import java.util.List;
 import javax.annotation.Generated;
+import java.util.List;
 
 @Generated("jsonschema2pojo")
 public class RepoArtifact {
