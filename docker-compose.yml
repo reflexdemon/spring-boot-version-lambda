@@ -3,6 +3,6 @@ services:
   spring-boot-version:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./DockerFile
     ports:
       - "8080:8080"
